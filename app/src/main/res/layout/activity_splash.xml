@@ -9,7 +9,7 @@
     tools:context=".Activities.SplashActivity">
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/registerBtn"
         android:layout_width="354dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -56,7 +56,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/splash_car"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintBottom_toTopOf="@+id/registerBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"

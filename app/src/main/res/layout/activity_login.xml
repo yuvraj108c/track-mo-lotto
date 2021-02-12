@@ -10,7 +10,7 @@
     tools:context=".Activities.LoginActivity">
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/registerBtn"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="354dp"
         android:layout_height="46dp"
@@ -63,7 +63,7 @@
         app:layout_constraintVertical_bias="0.378" />
 
     <EditText
-        android:id="@+id/phoneET"
+        android:id="@+id/registerPhoneET"
         android:layout_width="346dp"
         android:layout_height="73dp"
         android:layout_marginStart="8dp"
@@ -75,14 +75,13 @@
         android:hint="Enter your phone number"
         android:inputType="phone"
         android:maxLength="8"
-        android:text="58831357"
-        app:layout_constraintBottom_toTopOf="@+id/loginErrorTV"
+        app:layout_constraintBottom_toTopOf="@+id/registerErrorTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/loginErrorTV"
+        android:id="@+id/registerErrorTV"
         android:layout_width="336dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
@@ -91,7 +90,7 @@
         android:layout_marginRight="8dp"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintBottom_toTopOf="@+id/registerBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent" />
@@ -126,7 +125,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView5" />
 
     <ProgressBar
-        android:id="@+id/loginProgressBar"
+        android:id="@+id/registerProgressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -141,7 +140,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneET"
+        app:layout_constraintTop_toBottomOf="@+id/registerPhoneET"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

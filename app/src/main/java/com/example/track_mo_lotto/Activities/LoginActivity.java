@@ -17,8 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,18 +25,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Button loginBtn = findViewById(R.id.loginBtn);
-        final EditText phoneET = findViewById(R.id.phoneET);
+        final Button loginBtn = findViewById(R.id.registerBtn);
+        final EditText phoneET = findViewById(R.id.registerPhoneET);
         TextView registerTV = findViewById(R.id.registerTV);
-        final TextView errorTV = findViewById(R.id.loginErrorTV);
-        final ProgressBar progressBar = findViewById(R.id.loginProgressBar);
+        final TextView errorTV = findViewById(R.id.registerErrorTV);
+        final ProgressBar progressBar = findViewById(R.id.registerProgressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
         registerTV.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), RegisterActivity.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent = new Intent(v.getContext(), RegisterActivity.class);
+                    startActivity(myIntent);
+                }finally {
+                    finish();
+                }
+
             }
         });
 
