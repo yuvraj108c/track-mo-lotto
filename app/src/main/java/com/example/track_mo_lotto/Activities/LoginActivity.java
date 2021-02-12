@@ -69,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         Log.d("phone", "DocumentSnapshot data: " + document.getData());
-//                                        Intent intent = new Intent(getBaseContext(), OTPVerificationActivity.class);
-//                                        intent.putExtra("phone", phone);
-//                                        startActivity(intent);
+                                        Intent intent = new Intent(getBaseContext(), OTPVerificationActivity.class);
+                                        intent.putExtra("phone", phone);
+                                        startActivity(intent);
                                     } else {
                                         errorTV.setText("Invalid phone number.");
                                     }
