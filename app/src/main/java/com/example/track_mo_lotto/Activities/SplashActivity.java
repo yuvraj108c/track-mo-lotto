@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        trackBtn = findViewById(R.id.trackBtn);
+        trackBtn = findViewById(R.id.loginBtn);
         trackerBtn = findViewById(R.id.trackerBtn);
 
         trackBtn.setOnClickListener(new View.OnClickListener() {
