@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 errorTV.setText("");
-                String phone = phoneET.getText().toString();
+                final String phone = phoneET.getText().toString();
 
                 if(phone.length() == 0 || phone.length() < 8){
                     errorTV.setText(("Invalid phone number."));
@@ -60,6 +60,13 @@ public class LoginActivity extends AppCompatActivity {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
                                     Log.d("phone", "DocumentSnapshot data: " + document.getData());
+                                    try{
+                                        Intent intent = new Intent(getBaseContext(), OTPVerificationActivity.class);
+                                        intent.putExtra("phone", phone);
+                                        startActivity(intent);
+                                    }finally{
+                                        finish();
+                                    }
                                 } else {
                                     errorTV.setText("Invalid phone number.");
                                 }

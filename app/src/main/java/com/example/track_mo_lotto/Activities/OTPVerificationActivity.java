@@ -1,10 +1,10 @@
-package com.example.track_mo_lotto;
+package com.example.track_mo_lotto.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.track_mo_lotto.MainActivity;
+import com.example.track_mo_lotto.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -26,11 +28,11 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public class OTPVerification extends AppCompatActivity {
+public class OTPVerificationActivity extends AppCompatActivity {
 
     private EditText otpCode1, otpCode2, otpCode3, otpCode4, otpCode5, otpCode6;
     private String verificationID;
-    private String phonenumber = "+23057740849";
+    private String phonenumber;
 
 
     @Override
@@ -38,11 +40,17 @@ public class OTPVerification extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.otp_verification);
 
+        Intent intent = getIntent();
+        String phone = intent.getStringExtra("phone");
+        phonenumber="+230"+phone;
+
+        Log.d("phone",phonenumber);
+
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         final Button buttonVerify = findViewById(R.id.buttonVerifyOTP);
 
         // The following block of code can be inserted after login button clicked
-        // Parameters to change then -> OTPVerification.this and pass VerificationId as Extra input to this activity
+        // Parameters to change then -> OTPVerificationActivity.this and pass VerificationId as Extra input to this activity
         PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -55,13 +63,13 @@ public class OTPVerification extends AppCompatActivity {
             public void onVerificationFailed(FirebaseException e) {
                 progressBar.setVisibility(View.GONE);
                 buttonVerify.setVisibility(View.INVISIBLE);
-                Toast.makeText(OTPVerification.this, "Code could not be sent !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OTPVerificationActivity.this, "Code could not be sent !", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCodeSent(@NonNull String verificationId,
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
                 verificationID = verificationId;
-                Toast.makeText(OTPVerification.this,"OTP Sent Again",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OTPVerificationActivity.this,"OTP Sent Again",Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -96,7 +104,7 @@ public class OTPVerification extends AppCompatActivity {
                         || otpCode4.getText().toString().trim().isEmpty()
                         || otpCode5.getText().toString().trim().isEmpty()
                         || otpCode6.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(OTPVerification.this, "Please enter valid code", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OTPVerificationActivity.this, "Please enter valid code", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -129,7 +137,7 @@ public class OTPVerification extends AppCompatActivity {
                                         startActivity(intent);
                                     // else display error message
                                     } else {
-                                        Toast.makeText(OTPVerification.this, "The verification code was incorrect", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(OTPVerificationActivity.this, "The verification code was incorrect", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -152,7 +160,7 @@ public class OTPVerification extends AppCompatActivity {
                     public void onVerificationFailed(FirebaseException e) {
                         progressBar.setVisibility(View.GONE);
                         buttonVerify.setVisibility(View.INVISIBLE);
-                        Toast.makeText(OTPVerification.this, "Code could not be sent !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OTPVerificationActivity.this, "Code could not be sent !", Toast.LENGTH_SHORT).show();
                     }
                     @Override
                     public void onCodeSent(@NonNull String newverificationId,
@@ -165,7 +173,7 @@ public class OTPVerification extends AppCompatActivity {
                         PhoneAuthOptions.newBuilder()
                                 .setPhoneNumber(phonenumber)       // Phone number to verify
                                 .setTimeout( 60L, TimeUnit.SECONDS) // Timeout and unit
-                                .setActivity(OTPVerification.this)                 // Activity (for callback binding)
+                                .setActivity(OTPVerificationActivity.this)                 // Activity (for callback binding)
                                 .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                                 .build();
                 PhoneAuthProvider.verifyPhoneNumber(options);

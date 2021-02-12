@@ -5,7 +5,7 @@
         <activity android:name=".Activities.RegisterActivity"></activity>
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".OTPVerification">
+        <activity android:name=".Activities.OTPVerificationActivity" />
             <activity android:name=".Activities.SplashActivity">
 
                 <intent-filter>
@@ -15,7 +15,6 @@
                 </intent-filter>
             </activity>
 
-            <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

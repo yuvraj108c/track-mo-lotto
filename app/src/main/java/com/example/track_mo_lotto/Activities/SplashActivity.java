@@ -24,16 +24,25 @@ public class SplashActivity extends AppCompatActivity {
         trackBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
+                    startActivity(myIntent);
+                }finally{
+                    finish();
+                }
+
             }
         });
 
         trackerBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
-                startActivity(myIntent);
+                try{
+                    Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
+                    startActivity(myIntent);
+                }finally{
+                    finish();
+                }
             }
         });
     }
