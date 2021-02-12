@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(phone.length() == 0 || phone.length() < 8){
                     errorTV.setText(("Invalid phone number."));
                 }else {
-                    // Access a Cloud Firestore instance from your Activity
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                     db.collection("users")
