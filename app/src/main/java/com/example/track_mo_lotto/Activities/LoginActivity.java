@@ -25,6 +25,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Intent intent = getIntent();
+        final String next_path = intent.getStringExtra("path");
+
+
         final Button loginBtn = findViewById(R.id.registerBtn);
         final EditText phoneET = findViewById(R.id.registerPhoneET);
         TextView registerTV = findViewById(R.id.registerTV);
@@ -69,8 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         Log.d("phone", "DocumentSnapshot data: " + document.getData());
+
                                         Intent intent = new Intent(getBaseContext(), OTPVerificationActivity.class);
                                         intent.putExtra("phone", phone);
+                                        intent.putExtra("path",next_path);
                                         startActivity(intent);
                                     } else {
                                         errorTV.setText("Invalid phone number.");

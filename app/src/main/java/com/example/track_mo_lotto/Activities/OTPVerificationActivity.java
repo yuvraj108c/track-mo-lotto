@@ -41,7 +41,8 @@ public class OTPVerificationActivity extends AppCompatActivity {
         setContentView(R.layout.otp_verification);
 
         Intent intent = getIntent();
-        String phone = intent.getStringExtra("phone");
+        final String phone = intent.getStringExtra("phone");
+        final String next_path = intent.getStringExtra("path");
         phonenumber="+230"+phone;
 
         Log.d("phone",phonenumber);
@@ -132,9 +133,17 @@ public class OTPVerificationActivity extends AppCompatActivity {
                                     buttonVerify.setVisibility(View.VISIBLE);
                                     // If correct OTP inserted, new activity displayed
                                     if (task.isSuccessful()) {
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent);
+                                        Intent nextIntent;
+                                        if(next_path.equals("maps")){
+                                            nextIntent= new Intent(getApplicationContext(), MapsActivity.class);
+
+                                        }else{
+                                            nextIntent= new Intent(getApplicationContext(), MainActivity.class);
+
+                                        }
+                                        nextIntent.putExtra("phone",phone);
+                                        nextIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(nextIntent);
                                     // else display error message
                                     } else {
                                         Toast.makeText(OTPVerificationActivity.this, "The verification code was incorrect", Toast.LENGTH_SHORT).show();

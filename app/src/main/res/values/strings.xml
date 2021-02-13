@@ -4,4 +4,5 @@
     <string name="otp_callback">Did not receive the OTP ?</string>
     <string name="otp_resend">RESEND OTP</string>
     <string name="otp_button">Verify OTP</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

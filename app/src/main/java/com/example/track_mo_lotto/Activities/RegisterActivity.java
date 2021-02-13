@@ -67,8 +67,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                     final Map<String, Object> user = new HashMap<>();
                     user.put("car_no",carNo);
-                    user.put("lng",0);
-                    user.put("lat",0);
+                    user.put("lng",-20.233925);
+                    user.put("lat",57.489014);
 
                     final FirebaseFirestore db = FirebaseFirestore.getInstance();
 

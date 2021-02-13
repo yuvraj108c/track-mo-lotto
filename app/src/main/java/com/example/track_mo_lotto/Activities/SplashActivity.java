@@ -26,6 +26,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try{
                     Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
+                    myIntent.putExtra("path","maps");
                     startActivity(myIntent);
                 }finally{
                     finish();
@@ -39,6 +40,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try{
                     Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
+                    myIntent.putExtra("path","tracker");
                     startActivity(myIntent);
                 }finally{
                     finish();
