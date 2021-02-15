@@ -75,6 +75,7 @@
         android:hint="Enter your phone number"
         android:inputType="phone"
         android:maxLength="8"
+        android:text="58831357"
         app:layout_constraintBottom_toTopOf="@+id/registerErrorTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"

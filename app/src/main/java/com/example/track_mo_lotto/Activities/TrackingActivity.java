@@ -14,12 +14,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.track_mo_lotto.R;
 import com.example.track_mo_lotto.Services.GpsService;
@@ -71,7 +74,15 @@ public class TrackingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking);
         Intent intent = getIntent();
-        phoneNo = intent.getStringExtra("phonenumber");
+        phoneNo = intent.getStringExtra("phone");
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String phoneNo = preferences.getString("phone","test");
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, phoneNo, duration);
+        toast.show();
 
         btn_start = (Button) findViewById(R.id.button);
         btn_stop = (Button) findViewById(R.id.button2);

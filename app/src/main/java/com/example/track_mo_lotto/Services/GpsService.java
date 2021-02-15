@@ -1,16 +1,16 @@
 package com.example.track_mo_lotto.Services;
 
 import android.annotation.SuppressLint;
-import android.app.IntentService;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 
 import androidx.annotation.Nullable;
@@ -21,11 +21,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 
-public class GpsService extends IntentService {
+public class GpsService extends Service {
 
     private LocationListener listener;
     private LocationManager locationManager;
-    private BroadcastReceiver broadcastReceiver;
 
     ArrayList<Double> lats = new ArrayList<Double>();
     ArrayList<Double> longs = new ArrayList<Double>();
@@ -34,25 +33,10 @@ public class GpsService extends IntentService {
     ArrayList<Integer> longIsSame = new ArrayList<Integer>();
     private String phoneNo = "";
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public GpsService(String name) {
-        super(name);
-    }
-
-    //private String phoneNo = intent.getStringExtra("phone");
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        phoneNo = intent.getStringExtra("phonenumber");
     }
 
 
@@ -60,10 +44,13 @@ public class GpsService extends IntentService {
     @SuppressLint("MissingPermission")
     @Override
     public void onCreate(){
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        phoneNo = preferences.getString("phone","t");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final DocumentReference userRef = db.collection("users").document(phoneNo);
+
+
 
         listener = new LocationListener() {
             @Override
@@ -109,8 +96,8 @@ public class GpsService extends IntentService {
                 }
 
                 //BROADCAST TO MAINACTIVITY
-                //i.putExtra("coordinates", location.getLatitude()+" "+location.getLongitude());
-                //sendBroadcast(i);
+                i.putExtra("coordinates", location.getLatitude()+" "+location.getLongitude());
+                sendBroadcast(i);
 
                 //SEND TO FIREBASE
                 double latitude = (location.getLatitude());

@@ -1,9 +1,14 @@
 package com.example.track_mo_lotto.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +25,7 @@ public class SplashActivity extends AppCompatActivity {
 
         trackBtn = findViewById(R.id.registerBtn);
         trackerBtn = findViewById(R.id.trackerBtn);
+
 
         trackBtn.setOnClickListener(new View.OnClickListener() {
 

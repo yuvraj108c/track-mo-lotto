@@ -3,7 +3,9 @@ package com.example.track_mo_lotto.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,7 +79,8 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getBaseContext(), OTPVerificationActivity.class);
                                         intent.putExtra("phone", phone);
                                         intent.putExtra("path",next_path);
-                                        startActivity(intent);
+
+                                           startActivity(intent);
                                     } else {
                                         errorTV.setText("Invalid phone number.");
                                     }
