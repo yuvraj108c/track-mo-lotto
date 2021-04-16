@@ -1,7 +1,10 @@
 package com.example.track_mo_lotto.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -33,6 +36,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
     private EditText otpCode1, otpCode2, otpCode3, otpCode4, otpCode5, otpCode6;
     private String verificationID;
     private String phonenumber;
+    private String phone;
 
 
     @Override
@@ -41,7 +45,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
         setContentView(R.layout.otp_verification);
 
         Intent intent = getIntent();
-        final String phone = intent.getStringExtra("phone");
+        phone = intent.getStringExtra("phone");
         final String next_path = intent.getStringExtra("path");
         phonenumber="+230"+phone;
 
@@ -138,7 +142,11 @@ public class OTPVerificationActivity extends AppCompatActivity {
                                             nextIntent= new Intent(getApplicationContext(), MapsActivity.class);
 
                                         }else{
-                                            nextIntent= new Intent(getApplicationContext(), MainActivity.class);
+                                            nextIntent= new Intent(getApplicationContext(), TrackingActivity.class);
+                                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString("phone",phone);
+                                            editor.apply();
 
                                         }
                                         nextIntent.putExtra("phone",phone);

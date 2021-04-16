@@ -21,6 +21,12 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -44,8 +50,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void getCoordinatesFromDB(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference docRef = db.collection("users").document(phone);
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        final DocumentReference userDocRef = db.collection("users").document(phone);
+
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        final DocumentReference coordinatesDocRef = userDocRef.collection("coordinates").document(date);
+
+        coordinatesDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
                                 @Nullable FirebaseFirestoreException e) {
@@ -55,16 +65,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "Current data: " + snapshot.getData().get("lat"));
-                    Double lat =(Double) snapshot.getData().get("lat");
-                    Double lng =(Double) snapshot.getData().get("lng");
-                    String car_no = (String) snapshot.getData().get("car_no");
-                    LatLng carPosition = new LatLng(lat,lng);
+                    Log.d(TAG, "Current data: " + snapshot.getData());
 
-                    if(myMarker!=null) myMarker.remove();
-                    myMarker = mMap.addMarker(new MarkerOptions().position(carPosition).title(car_no));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(carPosition));
-                    mMap.animateCamera( CameraUpdateFactory.zoomTo( 12.0f ) );
+                    String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                    ArrayList<Double> coordinates = (ArrayList<Double>) snapshot.getData().get(time);
+
+                    if(coordinates != null){
+                        LatLng carPosition = new LatLng(coordinates.get(0),coordinates.get(1));
+
+                        if(myMarker!=null) myMarker.remove();
+                        myMarker = mMap.addMarker(new MarkerOptions().position(carPosition).title("MY CAR"));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(carPosition));
+                        mMap.animateCamera( CameraUpdateFactory.zoomTo( 12.0f ) );
+                    }
 
                 } else {
                     Log.d(TAG, "Current data: null");
