@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -76,11 +77,25 @@ public class LoginActivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         Log.d("phone", "DocumentSnapshot data: " + document.getData());
 
-                                        Intent intent = new Intent(getBaseContext(), OTPVerificationActivity.class);
-                                        intent.putExtra("phone", phone);
-                                        intent.putExtra("path",next_path);
+//                                        Intent nextIntent = new Intent(getBaseContext(), OTPVerificationActivity.class);
+                                        //intent.putExtra("phone", phone);
+                                        //intent.putExtra("path",next_path);
 
-                                           startActivity(intent);
+                                        Intent nextIntent;
+
+                                        if(next_path.equals("maps")){
+                                            nextIntent= new Intent(getApplicationContext(), MapsActivity.class);
+
+                                        }else{
+                                            nextIntent= new Intent(getApplicationContext(), TrackingActivity.class);
+                                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString("phone",phone);
+                                            editor.apply();
+
+                                        }
+                                        nextIntent.putExtra("phone",phone);
+                                           startActivity(nextIntent);
                                     } else {
                                         errorTV.setText("Invalid phone number.");
                                     }

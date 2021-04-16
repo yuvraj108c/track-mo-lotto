@@ -17,8 +17,14 @@ import androidx.annotation.Nullable;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
 
 
 public class GpsService extends Service {
@@ -48,8 +54,10 @@ public class GpsService extends Service {
         phoneNo = preferences.getString("phone","t");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final DocumentReference userRef = db.collection("users").document(phoneNo);
+        final DocumentReference userDocRef = db.collection("users").document(phoneNo);
 
+        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        final DocumentReference coordinatesDocRef = userDocRef.collection("coordinates").document(date);
 
 
         listener = new LocationListener() {
@@ -103,9 +111,14 @@ public class GpsService extends Service {
                 double latitude = (location.getLatitude());
                 double longitude = (location.getLongitude());
 
+                ArrayList<Double> coordinates = new ArrayList<>();
+                coordinates.add(latitude);
+                coordinates.add(longitude);
 
-                userRef.update("lat",latitude);
-                userRef.update("lng",longitude);
+                String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                HashMap<String,ArrayList<Double>> obj = new HashMap<>();
+                obj.put(time,coordinates);
+                coordinatesDocRef.set(obj, SetOptions.merge());
 
             }
 
