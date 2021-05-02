@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1039017533172",
+    "firebase_url": "https://track-mo-lotto-default-rtdb.firebaseio.com",
+    "project_id": "track-mo-lotto",
+    "storage_bucket": "track-mo-lotto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039017533172:android:057a8f59401f504c9588a1",
+        "android_client_info": {
+          "package_name": "com.example.track_mo_lotto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039017533172-r2i00mm4u3sgkcdf0mgbdmb8qmi05poe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.track_mo_lotto",
+            "certificate_hash": "dfba594086429f6704de1eec635ca9d185e81f19"
+          }
+        },
+        {
+          "client_id": "1039017533172-a6q7e1losijb19umepol5o8ccn5dg55r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLdSESK5ejXVh0Cvsyh0LQ2oyrPj0Lvh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039017533172-a6q7e1losijb19umepol5o8ccn5dg55r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
