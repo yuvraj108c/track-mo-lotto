@@ -14,34 +14,14 @@
         android:layout_width="354dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/colorPrimary"
         android:text="Track my car"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/trackerBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/historyBtn"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="354dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="12dp"
-        android:background="@color/colorPrimary"
-        android:text="History"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/trackerBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button

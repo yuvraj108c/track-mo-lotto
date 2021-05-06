@@ -25,7 +25,6 @@ public class SplashActivity extends AppCompatActivity {
 
         trackBtn = findViewById(R.id.registerBtn);
         trackerBtn = findViewById(R.id.trackerBtn);
-        historyBtn = findViewById(R.id.historyBtn);
 
         trackBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -54,18 +53,6 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        historyBtn.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                try{
-                    Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
-                    myIntent.putExtra("path","history");
-                    startActivity(myIntent);
-                }finally{
-                    finish();
-                }
-            }
-        });
     }
 
 

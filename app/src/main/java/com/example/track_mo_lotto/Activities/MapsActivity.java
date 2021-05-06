@@ -65,14 +65,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.history:
-                        Intent intent = new Intent(MapsActivity.this, HistoryActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
                         intent.putExtra("phone", phone);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
+                        break;
                     case R.id.exit:
-                        //code to logout user
+                        Intent exitIntent = new Intent(getApplicationContext(), SplashActivity.class);
+                        startActivity(exitIntent);
+                        overridePendingTransition(0, 0);
+                        break;
                 }
-return true;
+                return true;
             }
         });
 

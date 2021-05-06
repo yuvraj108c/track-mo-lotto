@@ -68,13 +68,17 @@ public class HistoryActivity extends FragmentActivity implements OnMapReadyCallb
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.live:
-                        Intent intent = new Intent(HistoryActivity.this, MapsActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                         intent.putExtra("phone", phone);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
+                        break;
 
                     case R.id.exit:
-
+                        Intent exitIntent = new Intent(getApplicationContext(), SplashActivity.class);
+                        startActivity(exitIntent);
+                        overridePendingTransition(0, 0);
+                        break;
                         //code to logout user
 
                 }
