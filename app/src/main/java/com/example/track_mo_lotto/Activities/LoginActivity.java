@@ -77,27 +77,10 @@ public class LoginActivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         Log.d("phone", "DocumentSnapshot data: " + document.getData());
 
-//                                        Intent nextIntent = new Intent(getBaseContext(), OTPVerificationActivity.class);
-                                        //intent.putExtra("phone", phone);
-                                        //intent.putExtra("path",next_path);
-
-                                        Intent nextIntent = new Intent();
-
-                                        if(next_path.equals("maps")){
-                                            nextIntent= new Intent(getApplicationContext(), MapsActivity.class);
-
-                                        }else if(next_path.equals("tracker")){
-                                            nextIntent= new Intent(getApplicationContext(), TrackingActivity.class);
-                                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                                            SharedPreferences.Editor editor = preferences.edit();
-                                            editor.putString("phone",phone);
-                                            editor.apply();
-
-                                        }else if(next_path.equals("history")){
-                                            nextIntent= new Intent(getApplicationContext(), HistoryActivity.class);
-                                        }
-                                        nextIntent.putExtra("phone",phone);
-                                           startActivity(nextIntent);
+                                        Intent nextIntent = new Intent(getBaseContext(), OTPVerificationActivity.class);
+                                        nextIntent.putExtra("phone", phone);
+                                        nextIntent.putExtra("path",next_path);
+                                        startActivity(nextIntent);
                                     } else {
                                         errorTV.setText("Invalid phone number.");
                                     }
