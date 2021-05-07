@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -115,10 +116,23 @@ public class GpsService extends Service {
                 coordinates.add(latitude);
                 coordinates.add(longitude);
 
-                String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-                HashMap<String,ArrayList<Double>> obj = new HashMap<>();
-                obj.put(time,coordinates);
-                coordinatesDocRef.set(obj, SetOptions.merge());
+                int seconds = Integer.parseInt(new SimpleDateFormat("ss", Locale.getDefault()).format(new Date()));
+//                Log.d("seconds", String.valueOf(seconds));
+
+                if(seconds % 5 == 0){
+                    String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                    HashMap<String,ArrayList<Double>> obj = new HashMap<>();
+                    String newTime ="";
+                    if(seconds < 10){
+                        newTime = time+":0"+seconds;
+                    }else{
+                        newTime = time+":"+seconds;
+                    }
+
+                    obj.put(newTime,coordinates);
+
+                    coordinatesDocRef.set(obj, SetOptions.merge());
+                }
 
             }
 

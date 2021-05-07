@@ -1,10 +1,5 @@
 package com.example.track_mo_lotto.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,8 +8,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.track_mo_lotto.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,11 +34,10 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -50,6 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String TAG = "FIREBASE";
     Marker myMarker;
     static ArrayList<LatLng> carcordinates=new ArrayList<>();
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,33 +106,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "Current data: " + snapshot.getData().values());
+//                    Log.d(TAG, "Current data: " + snapshot.getData().values());
 
-                    String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
-                    ArrayList<Double> newCoordinates = (ArrayList<Double>) snapshot.getData().get(time);
-                    LatLng carPosition = null;
+                    String currentDateStr = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+                    String HHmm = currentDateStr.substring(0,5);
 
-                    if(newCoordinates != null) {
-                        carPosition = new LatLng(newCoordinates.get(0), newCoordinates.get(1));
-                    }else {
-                        List<Object> prevCoordinatesObj = Arrays.asList(snapshot.getData().values().toArray());
-                        List<Double> prevCoordinates = (List<Double>) prevCoordinatesObj.get(0);
-                        carPosition = new LatLng(prevCoordinates.get(0), prevCoordinates.get(1));
-                        Log.d("Previous coordinates: ", String.valueOf(carPosition));
-                    }
+                    // convert to multiple of 5
+                    int seconds = Integer.parseInt(currentDateStr.substring(6,8));
+                    seconds = seconds - (seconds % 5);
 
-                    if(carPosition != null){
-                        carcordinates.add(carPosition);
+                    try {
+                        // convert back to Date
+                        String newCurrentDateStr = seconds < 10 ? HHmm+":0"+ seconds : HHmm+":"+seconds;
+                        Date newCurrentDate = new SimpleDateFormat("HH:mm:ss").parse(newCurrentDateStr);
 
-                        PolylineOptions drawline= new PolylineOptions().addAll(carcordinates).color(Color.BLUE).width(10);
+                        // Find last coordinates
+                        ArrayList<Double> newCoordinates = null;
+                        while(newCoordinates == null){
+                            String prevTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(newCurrentDate);
+                            newCoordinates = (ArrayList<Double>) snapshot.getData().get(prevTime);
+                            newCurrentDate.setTime(newCurrentDate.getTime()-5000);
+                        }
 
-                        if(myMarker!=null) myMarker.remove();
-                        myMarker = mMap.addMarker(new MarkerOptions().position(carPosition).title("MY CAR") .icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.car_icon)));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(carPosition));
-                        mMap.animateCamera( CameraUpdateFactory.zoomTo( 12.0f ) );
+                        LatLng carPosition = new LatLng(newCoordinates.get(0), newCoordinates.get(1));
 
-                        Polyline line=mMap.addPolyline(drawline);
-                        line.setVisible(true);
+                        if(carPosition != null){
+                            carcordinates.add(carPosition);
+                            Log.d("Previous coordinates: ", String.valueOf(carPosition));
+                            PolylineOptions drawline= new PolylineOptions().addAll(carcordinates).color(Color.BLUE).width(10);
+
+                            if(myMarker!=null) myMarker.remove();
+                            myMarker = mMap.addMarker(new MarkerOptions().position(carPosition).title("MY CAR") .icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.car_icon)));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(carPosition));
+                            mMap.animateCamera( CameraUpdateFactory.zoomTo( 12.0f ) );
+
+                            Polyline line=mMap.addPolyline(drawline);
+                            line.setVisible(true);
+                        }
+
+
+                    } catch (ParseException parseException) {
+                        parseException.printStackTrace();
                     }
 
                 } else {
