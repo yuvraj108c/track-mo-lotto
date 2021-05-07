@@ -68,41 +68,41 @@ public class GpsService extends Service {
                 Intent i = new Intent("location_update");
 
 
-                lats.add( location.getLatitude());
-                longs.add(location.getLongitude());
-
-
-                //ONCE WE'VE HAD 5 REQUESTS, CHECK THE 5 PAIR OF COORDINATES
-                if(lats.size() == 5 && longs.size() == 5){
-
-                    double lastLat = location.getLatitude();
-                    double lastLong = location.getLongitude();
-
-                    for(int j=0; j<lats.size(); j++){
-                        if(lats.get(j) == lastLat){
-                            latIsSame.add(1);
-                        }
-
-                        if(longs.get(j) == lastLong){
-                            longIsSame.add(1);
-                        }
-                    }
-
-                    //IF ALL PAIR OF COORDINATES FROM THE ARRAYLIST WERE THE SAME, DECREASE THE RATE(IS PROBABLY NOT MOVING)
-                    if(latIsSame.size() > 4 ){
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0,listener);
-
-                        //ELSE KEEP THE RATE LIKE IT IS( IS MOVING)
-                    }else{
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0,listener);
-                    }
-
-                    lats.clear();
-                    longs.clear();
-                    latIsSame.clear();
-                    longIsSame.clear();
-
-                }
+//                lats.add( location.getLatitude());
+//                longs.add(location.getLongitude());
+//
+//
+//                //ONCE WE'VE HAD 5 REQUESTS, CHECK THE 5 PAIR OF COORDINATES
+//                if(lats.size() == 5 && longs.size() == 5){
+//
+//                    double lastLat = location.getLatitude();
+//                    double lastLong = location.getLongitude();
+//
+//                    for(int j=0; j<lats.size(); j++){
+//                        if(lats.get(j) == lastLat){
+//                            latIsSame.add(1);
+//                        }
+//
+//                        if(longs.get(j) == lastLong){
+//                            longIsSame.add(1);
+//                        }
+//                    }
+//
+//                    //IF ALL PAIR OF COORDINATES FROM THE ARRAYLIST WERE THE SAME, DECREASE THE RATE(IS PROBABLY NOT MOVING)
+//                    if(latIsSame.size() > 4 ){
+//                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0,listener);
+//
+//                        //ELSE KEEP THE RATE LIKE IT IS( IS MOVING)
+//                    }else{
+//                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0,listener);
+//                    }
+//
+//                    lats.clear();
+//                    longs.clear();
+//                    latIsSame.clear();
+//                    longIsSame.clear();
+//
+//                }
 
                 //BROADCAST TO MAINACTIVITY
                 i.putExtra("coordinates", location.getLatitude()+" "+location.getLongitude());
